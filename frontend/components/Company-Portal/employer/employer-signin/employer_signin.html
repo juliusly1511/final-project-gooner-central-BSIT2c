@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Registration - Company Portal</title>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="employer_signin.css">
+</head>
+<body>
+    <div class="register-container employer-theme">
+        <div class="logo">
+            <h1>Create Employer Account</h1>
+            <p>Set up your company account</p>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage" style="display: none;">
+            <h3>Employer Account Created!</h3>
+            <p>Redirecting to login in <span id="countdown">3</span> seconds...</p>
+        </div>
+
+        <form id="employerRegisterForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="companyName">Company Name *</label>
+                    <input type="text" id="companyName" name="companyName" placeholder="Tech Corp Inc." required>
+                </div>
+                <div class="form-group">
+                    <label for="companyId">Company ID *</label>
+                    <input type="text" id="companyId" name="companyId" placeholder="COMP-001234" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="adminEmail">Admin Email *</label>
+                <input type="email" id="adminEmail" name="adminEmail" placeholder="admin@techcorp.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="industry">Industry *</label>
+                <select id="industry" name="industry" required>
+                    <option value="">Select Industry</option>
+                    <option value="technology">Technology</option>
+                    <option value="finance">Finance</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="retail">Retail</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="services">Services</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="companyPhone">Company Phone</label>
+                <input type="tel" id="companyPhone" name="companyPhone" placeholder="+1 (555) 123-4567">
+            </div>
+
+            <div class="password-group">
+                <div class="form-group">
+                    <label for="employerPassword">Password *</label>
+                    <input type="password" id="employerPassword" name="employerPassword" placeholder="Create password" required minlength="8">
+                    <div class="strength-indicator" id="strengthIndicator"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+                </div>
+            </div>
+
+            <div class="options">
+                <label class="remember-me">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    I agree to the <a href="#" class="terms">Terms & Conditions</a> *
+                </label>
+            </div>
+
+            <button type="submit" class="register-btn employer-btn">Create Employer Account</button>
+        </form>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="#" onclick="navigateTo.employerLogin(); return false;">Sign in here</a></p>
+            <p><a href="#" onclick="navigateTo.selection(); return false;">← Back to Selection</a></p>
+        </div>
+    </div>
+
+    <!--External JS -->
+    <script src="employer_signin.js"></script>
+</body>
+</html>
