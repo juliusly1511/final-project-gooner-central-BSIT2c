@@ -7,7 +7,7 @@ const Job = require('../../database/models/Job');
 const Application = require('../../database/models/Application');
 const { requireRole } = require('../middleware/auth');
 
-const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
+const uploadDir = path.join(__dirname, '..', '..', 'frontend', 'public', 'uploads');
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
 const storage = multer.diskStorage({
