@@ -1,0 +1,42 @@
+<%- include('partials/header', { title: job.title + ' — ' + job.company }) %>
+
+<div class="container">
+  <% if (typeof query !== 'undefined') {} %>
+  <a href="/">&larr; Back to jobs</a>
+
+  <article class="detail" style="margin-top:16px;">
+    <h1><%= job.title %></h1>
+    <div class="company"><%= job.company %> &middot; <%= job.location %></div>
+    <div class="job-meta">
+      <span class="tag"><%= job.category %></span>
+      <span class="tag tag-muted"><%= job.type %></span>
+      <% if (job.salary) { %><span class="tag tag-muted"><%= job.salary %></span><% } %>
+    </div>
+    <div class="description"><%= job.description %></div>
+
+    <hr style="margin:32px 0;border:none;border-top:1px solid var(--border);" />
+
+    <% if (!currentUser) { %>
+      <p><a href="/auth/login" class="btn">Sign in to apply</a></p>
+    <% } else if (currentUser.role !== 'seeker') { %>
+      <p style="color:var(--muted);">Only job seekers can apply.</p>
+    <% } else if (alreadyApplied) { %>
+      <div class="success">You've already applied to this job.</div>
+    <% } else { %>
+      <h3>Apply for this job</h3>
+      <form action="/applications/<%= job._id %>" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="coverLetter">Cover letter (optional)</label>
+          <textarea id="coverLetter" name="coverLetter" placeholder="Tell the employer why you're a great fit..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="resume">Resume (PDF, DOC, DOCX — max 5 MB)</label>
+          <input id="resume" name="resume" type="file" accept=".pdf,.doc,.docx" />
+        </div>
+        <button class="btn btn-accent" type="submit">Submit application</button>
+      </form>
+    <% } %>
+  </article>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,47 @@
+<%- include('partials/header', { title: 'Post a Job' }) %>
+
+<div class="form-card wide">
+  <h1>Post a Job</h1>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form action="/jobs" method="POST">
+    <div class="form-group">
+      <label>Job title *</label>
+      <input name="title" value="<%= form.title || '' %>" required />
+    </div>
+    <div class="form-group">
+      <label>Company *</label>
+      <input name="company" value="<%= form.company || '' %>" required />
+    </div>
+    <div class="form-group">
+      <label>Location *</label>
+      <input name="location" placeholder="e.g. Remote, New York, NY" value="<%= form.location || '' %>" required />
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select name="category">
+        <% categories.forEach(c => { %>
+          <option value="<%= c %>" <%= form.category === c ? 'selected' : '' %>><%= c %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select name="type">
+        <% types.forEach(t => { %>
+          <option value="<%= t %>" <%= form.type === t ? 'selected' : '' %>><%= t %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Salary (optional)</label>
+      <input name="salary" placeholder="e.g. $80k–$120k" value="<%= form.salary || '' %>" />
+    </div>
+    <div class="form-group">
+      <label>Description *</label>
+      <textarea name="description" required><%= form.description || '' %></textarea>
+    </div>
+    <button class="btn" type="submit">Publish job</button>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

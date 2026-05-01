@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= typeof title !== 'undefined' ? title : 'Job Connect' %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo">Job<span>Connect</span></a>
+    <nav class="nav">
+      <a href="/">Find Jobs</a>
+      <% if (currentUser) { %>
+        <% if (currentUser.role === 'employer') { %>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/jobs/new" class="btn btn-accent btn-sm">Post a Job</a>
+        <% } %>
+        <span style="color:#767676;font-size:14px;">Hi, <%= currentUser.name %></span>
+        <form action="/auth/logout" method="POST" class="inline">
+          <button type="submit" class="btn btn-outline btn-sm">Logout</button>
+        </form>
+      <% } else { %>
+        <a href="/auth/login">Sign In</a>
+        <a href="/auth/register" class="btn btn-sm">Sign Up</a>
+      <% } %>
+    </nav>
+  </header>
+  <main>

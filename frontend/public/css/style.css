@@ -1,0 +1,277 @@
+/* ==== Job Connect — edit colors/sizes here ==== */
+:root {
+  --primary: #2557a7;
+  --primary-dark: #164081;
+  --accent: #ff6b35;
+  --bg: #f3f2f1;
+  --card: #ffffff;
+  --text: #2d2d2d;
+  --muted: #767676;
+  --border: #e4e2e0;
+  --success: #0a8a5b;
+  --danger: #d93025;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Header */
+.header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.logo { font-size: 24px; font-weight: 800; color: var(--primary); }
+.logo span { color: var(--accent); }
+.nav { display: flex; gap: 16px; align-items: center; }
+.nav a { color: var(--text); font-weight: 500; }
+.nav .btn { color: white; }
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn:hover { background: var(--primary-dark); text-decoration: none; color: #fff; }
+.btn-accent { background: var(--accent); }
+.btn-accent:hover { background: #e0541f; }
+.btn-outline { background: transparent; color: var(--primary); border: 1px solid var(--primary); }
+.btn-outline:hover { background: var(--primary); color: #fff; }
+.btn-danger { background: var(--danger); }
+.btn-sm { padding: 6px 12px; font-size: 13px; }
+
+/* Hero / search */
+.hero {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 60px 24px;
+  text-align: center;
+}
+.hero h1 { font-size: 36px; margin: 0 0 8px; }
+.hero p { opacity: 0.9; margin: 0 0 24px; }
+.search {
+  background: #fff;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+}
+.search input, .search select {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+}
+@media (max-width: 720px) {
+  .search { grid-template-columns: 1fr; }
+}
+
+/* Layout */
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.grid { display: grid; gap: 16px; }
+
+/* Job cards */
+.job-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow .15s, border-color .15s;
+}
+.job-card:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+.job-card h3 { margin: 0 0 4px; font-size: 18px; }
+.job-card h3 a { color: var(--text); }
+.job-card .company { color: var(--muted); font-size: 14px; }
+.job-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.tag {
+  background: #eef3fb;
+  color: var(--primary-dark);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tag-muted { background: #f0f0f0; color: var(--muted); }
+.posted { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+/* Detail */
+.detail {
+  background: #fff;
+  padding: 32px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.detail h1 { margin: 0 0 4px; }
+.detail .company { color: var(--muted); margin-bottom: 16px; }
+.description { white-space: pre-wrap; line-height: 1.7; margin-top: 20px; }
+
+/* Forms */
+.form-card {
+  background: #fff;
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 32px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.form-card.wide { max-width: 720px; }
+.form-card h1 { margin-top: 0; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.form-group textarea { min-height: 140px; resize: vertical; }
+.error {
+  background: #fdecea;
+  color: var(--danger);
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.success {
+  background: #e6f4ec;
+  color: var(--success);
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.role-toggle { display: flex; gap: 8px; }
+.role-toggle label {
+  flex: 1;
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+}
+.role-toggle input { display: none; }
+.role-toggle input:checked + span { color: var(--primary); font-weight: 700; }
+.role-toggle label:has(input:checked) { border-color: var(--primary); background: #eef3fb; }
+
+/* Dashboard */
+.section { margin-bottom: 32px; }
+.section h2 { border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+.app-row {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* inline form */
+.inline { display: inline; }
+/* Google Email Verification Styles */
+.google-verify-status {
+    margin-top: 8px;
+    font-size: 0.85em;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Email input styling */
+#email {
+    transition: all 0.3s ease;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+#email:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+/* Verification button hover effect */
+button:has(+ .google-verify-status) {
+    transition: all 0.2s ease;
+}
+
+/* Loading state for email input */
+#email.verifying {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="%234285f4" stroke-width="2" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .google-verify-status {
+        font-size: 0.75em;
+        padding: 6px 10px;
+    }
+    
+    button:has(+ .google-verify-status) {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

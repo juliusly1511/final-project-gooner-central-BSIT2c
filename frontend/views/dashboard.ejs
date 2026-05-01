@@ -1,0 +1,54 @@
+<%- include('partials/header', { title: 'Employer Dashboard' }) %>
+
+<div class="container">
+  <h1>Employer Dashboard</h1>
+
+  <section class="section">
+    <h2>Your job postings (<%= jobs.length %>)</h2>
+    <% if (jobs.length === 0) { %>
+      <p>You haven't posted any jobs yet. <a href="/jobs/new">Post one now</a>.</p>
+    <% } else { %>
+      <div class="grid">
+        <% jobs.forEach(job => { %>
+          <div class="job-card">
+            <h3><a href="/jobs/<%= job._id %>"><%= job.title %></a></h3>
+            <div class="company"><%= job.company %> &middot; <%= job.location %></div>
+            <div class="job-meta">
+              <span class="tag"><%= job.category %></span>
+              <span class="tag tag-muted"><%= job.type %></span>
+            </div>
+            <form action="/jobs/<%= job._id %>/delete" method="POST" class="inline" data-confirm="Delete this job and all its applications?">
+              <button class="btn btn-danger btn-sm" type="submit" style="margin-top:10px;">Delete</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </section>
+
+  <section class="section">
+    <h2>Applications received (<%= apps.length %>)</h2>
+    <% if (apps.length === 0) { %>
+      <p>No applications yet.</p>
+    <% } else { %>
+      <% apps.forEach(app => { %>
+        <div class="app-row">
+          <div>
+            <strong><%= app.applicant.name %></strong>
+            (<a href="mailto:<%= app.applicant.email %>"><%= app.applicant.email %></a>)
+            applied to <a href="/jobs/<%= app.job._id %>"><%= app.job.title %></a>
+            <div style="color:var(--muted);font-size:12px;"><%= new Date(app.createdAt).toLocaleString() %></div>
+            <% if (app.coverLetter) { %>
+              <details style="margin-top:6px;"><summary>Cover letter</summary><div style="white-space:pre-wrap;margin-top:6px;"><%= app.coverLetter %></div></details>
+            <% } %>
+          </div>
+          <% if (app.resumePath) { %>
+            <a class="btn btn-outline btn-sm" href="<%= app.resumePath %>" target="_blank">View Resume</a>
+          <% } %>
+        </div>
+      <% }) %>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/footer') %>
