@@ -3,8 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const Job = require('../models/Job');
-const Application = require('../models/Application');
+const Job = require('../../database/models/Job');
+const Application = require('../../database/models/Application');
 const { requireRole } = require('../middleware/auth');
 
 const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
