@@ -42,15 +42,19 @@ server.js           # Express app entry
 .env                # Your secrets (create from .env.example)
 
 backend/
-models/             # Mongoose models (User, Job, Application)
-routes/             # Route handlers (auth, jobs, applications)
-middleware/         # Auth middleware
+    routes/             # Route handlers (auth, jobs, applications)
+    middleware/         # Auth 
+
+database/
+    models/             # Mongoose models (User, Job, Application)
+
 
 frontend/
-views/              # EJS templates (HTML)
-public/css/         # Stylesheets
-public/js/          # Client-side JS
-public/uploads/     # Uploaded resumes
+    views/              # EJS templates (HTML)
+    public/        
+        css/            # Stylesheets
+        js/             # Client-side JS
+        uploads/        # Uploaded resumes
 
 ```
 
