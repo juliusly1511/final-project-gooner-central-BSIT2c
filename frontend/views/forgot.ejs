@@ -1,0 +1,21 @@
+<%- include('partials/header', { title: 'Forgot Password' }) %>
+
+<div class="form-card">
+  <h1>Forgot your password?</h1>
+  <p style="color:var(--muted);font-size:14px;margin-top:-8px;">
+    Enter your email and we'll send you a 6-digit reset code.
+  </p>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form action="/auth/forgot" method="POST">
+    <div class="form-group">
+      <label>Email</label>
+      <input name="email" type="email" value="<%= form.email || '' %>" required />
+    </div>
+    <button class="btn" type="submit" style="width:100%;">Send reset code</button>
+  </form>
+  <p style="text-align:center;margin-top:16px;font-size:14px;">
+    <a href="/auth/login">Back to sign in</a>
+  </p>
+</div>
+
+<%- include('partials/footer') %>

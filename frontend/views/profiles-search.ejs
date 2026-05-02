@@ -1,0 +1,96 @@
+<%- include('partials/header', { title: title }) %>
+
+<section class="search-hero">
+  <h1>Find People</h1>
+  <p>Discover talented job seekers and great employers on JobConnect.</p>
+</section>
+
+<form method="GET" action="/people" class="search-bar">
+  <div class="field">
+    <label for="q">Keyword</label>
+    <input id="q" type="text" name="q" value="<%= q %>" placeholder="Name, skill, company, headline…" />
+  </div>
+  <div class="field">
+    <label for="role">Role</label>
+    <select id="role" name="role">
+      <option value="">All people</option>
+      <option value="seeker"   <%= role === 'seeker'   ? 'selected' : '' %>>Job Seekers</option>
+      <option value="employer" <%= role === 'employer' ? 'selected' : '' %>>Employers</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="loc">Location</label>
+    <input id="loc" type="text" name="location" value="<%= location %>" placeholder="City, country" />
+  </div>
+  <button type="submit" class="btn">🔍 Search</button>
+</form>
+
+<div class="search-results-meta">
+  <div>
+    <strong><%= total %></strong> result<%= total === 1 ? '' : 's' %><% if (q || role || location) { %> for your search<% } %>
+  </div>
+  <% if (q || role || location) { %>
+    <a href="/people" class="btn btn-ghost btn-sm">Clear filters</a>
+  <% } %>
+</div>
+
+<% if (results.length === 0) { %>
+  <div style="max-width:1080px;margin:0 auto;padding:0 24px 40px;">
+    <div class="empty">
+      <h1 style="font-size:42px;">🔎</h1>
+      <p>No profiles matched your search.</p>
+      <a href="/people" class="btn">Show everyone</a>
+    </div>
+  </div>
+<% } else { %>
+  <div class="profiles-grid">
+    <% results.forEach(function(u) { %>
+      <a href="/profile/<%= u._id %>" class="profile-card">
+        <div class="avatar">
+          <% if (u.avatarUrl) { %>
+            <img src="<%= u.avatarUrl %>" alt="<%= u.name %>" />
+          <% } else { %>
+            <%= (u.name || '?').charAt(0).toUpperCase() %>
+          <% } %>
+        </div>
+        <div class="body">
+          <div class="name-row">
+            <span class="name"><%= u.name %></span>
+            <span class="role-badge <%= u.role === 'employer' ? 'employer' : 'seeker' %>">
+              <%= u.role === 'employer' ? 'Employer' : 'Seeker' %>
+            </span>
+          </div>
+          <% if (u.role === 'employer' && u.company) { %>
+            <div class="headline"><%= u.company %><% if (u.industry) { %> · <%= u.industry %><% } %></div>
+          <% } else if (u.headline) { %>
+            <div class="headline"><%= u.headline %></div>
+          <% } %>
+          <% if (u.location) { %>
+            <div class="meta">📍 <%= u.location %></div>
+          <% } %>
+          <% if (u.skills && u.skills.length) { %>
+            <div class="skills">
+              <% u.skills.slice(0, 5).forEach(function(s){ %>
+                <span class="tag"><%= s %></span>
+              <% }) %>
+              <% if (u.skills.length > 5) { %>
+                <span class="tag tag-muted">+<%= u.skills.length - 5 %></span>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+
+  <% if (totalPages > 1) { %>
+    <div class="pagination">
+      <% for (let p = 1; p <= totalPages; p++) { %>
+        <a href="/people?<%= new URLSearchParams({ q, role, location, page: p }).toString() %>"
+           class="<%= p === page ? 'active' : '' %>"><%= p %></a>
+      <% } %>
+    </div>
+  <% } %>
+<% } %>
+
+<%- include('partials/footer') %>

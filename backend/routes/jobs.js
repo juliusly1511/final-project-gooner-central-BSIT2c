@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Job = require('../../database/models/Job');
-const Application = require('../../database/models/Application');
+const Job = require('../models/Job');
+const Application = require('../models/Application');
 const { requireLogin, requireRole } = require('../middleware/auth');
 
 const CATEGORIES = ['Engineering', 'Design', 'Marketing', 'Sales', 'Finance', 'Operations', 'Other'];

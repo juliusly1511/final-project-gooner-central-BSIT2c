@@ -1,0 +1,24 @@
+<%- include('partials/header', { title: 'Verify Email' }) %>
+
+<div class="form-card">
+  <h1><%= purpose === 'login' ? 'Enter sign-in code' : 'Verify your email' %></h1>
+  <p style="color:var(--muted);font-size:14px;margin-top:-8px;">
+    We sent a 6-digit code to <b><%= email %></b>. It expires in 15 minutes.
+  </p>
+  <% if (typeof info !== 'undefined' && info) { %><div class="success"><%= info %></div><% } %>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form action="/auth/verify" method="POST">
+    <div class="form-group">
+      <label>6-digit code</label>
+      <input name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
+             autocomplete="one-time-code" required autofocus
+             style="font-size:22px;letter-spacing:8px;text-align:center;" />
+    </div>
+    <button class="btn" type="submit" style="width:100%;">Verify</button>
+  </form>
+  <form action="/auth/verify/resend" method="POST" style="margin-top:12px;">
+    <button type="submit" class="btn btn-outline" style="width:100%;">Resend code</button>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

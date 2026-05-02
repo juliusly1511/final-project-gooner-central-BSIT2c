@@ -1,0 +1,88 @@
+<%- include('partials/header', { title: user.name }) %>
+
+<div class="container" style="max-width:820px;">
+  <div class="profile-header">
+    <div class="avatar-wrap">
+      <% if (user.avatarUrl) { %>
+        <img src="<%= user.avatarUrl %>" alt="avatar" class="avatar-lg" />
+      <% } else { %>
+        <div class="avatar-lg avatar-placeholder"><%= (user.name||'?').charAt(0).toUpperCase() %></div>
+      <% } %>
+    </div>
+    <div>
+      <h1 style="margin:0;"><%= user.name %></h1>
+      <div style="color:var(--muted);">
+        <%= user.role === 'employer' ? 'Employer' : 'Job Seeker' %>
+        <% if (user.headline) { %> · <%= user.headline %><% } %>
+      </div>
+      <% if (user.location) { %><div style="color:var(--muted);font-size:14px;">📍 <%= user.location %></div><% } %>
+    </div>
+  </div>
+
+  <% if (user.bio) { %>
+    <section class="section">
+      <h2>About</h2>
+      <p style="white-space:pre-wrap;"><%= user.bio %></p>
+    </section>
+  <% } %>
+
+  <% if (user.role === 'employer') { %>
+    <section class="section">
+      <h2>Company</h2>
+      <p>
+        <strong><%= user.company || '—' %></strong>
+        <% if (user.industry) { %> · <%= user.industry %><% } %>
+        <% if (user.companySize) { %> · <%= user.companySize %> employees<% } %>
+      </p>
+      <% if (user.companyAbout) { %><p style="white-space:pre-wrap;"><%= user.companyAbout %></p><% } %>
+    </section>
+  <% } else { %>
+    <% if (user.skills && user.skills.length) { %>
+      <section class="section">
+        <h2>Skills</h2>
+        <div>
+          <% user.skills.forEach(function(s){ %><span class="tag"><%= s %></span> <% }); %>
+        </div>
+      </section>
+    <% } %>
+
+    <% if (user.experience && user.experience.length) { %>
+      <section class="section">
+        <h2>Experience</h2>
+        <% user.experience.forEach(function(e){ %>
+          <div class="timeline-item">
+            <strong><%= e.title %></strong> <% if (e.company) { %>at <%= e.company %><% } %>
+            <div style="color:var(--muted);font-size:13px;">
+              <%= e.from || '' %><% if (e.to) { %> – <%= e.to %><% } %>
+            </div>
+            <% if (e.description) { %><p><%= e.description %></p><% } %>
+          </div>
+        <% }); %>
+      </section>
+    <% } %>
+
+    <% if (user.education && user.education.length) { %>
+      <section class="section">
+        <h2>Education</h2>
+        <% user.education.forEach(function(e){ %>
+          <div class="timeline-item">
+            <strong><%= e.school %></strong>
+            <% if (e.degree || e.field) { %>
+              <div><%= [e.degree, e.field].filter(Boolean).join(', ') %></div>
+            <% } %>
+            <% if (e.year) { %><div style="color:var(--muted);font-size:13px;"><%= e.year %></div><% } %>
+          </div>
+        <% }); %>
+      </section>
+    <% } %>
+  <% } %>
+
+  <section class="section">
+    <h2>Contact</h2>
+    <% if (user.website) { %><div>🔗 <a href="<%= user.website %>" target="_blank"><%= user.website %></a></div><% } %>
+    <% if (user.phone) { %><div>📞 <%= user.phone %></div><% } %>
+    <div>✉️ <a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

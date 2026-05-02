@@ -1,0 +1,37 @@
+<%- include('partials/header', { title: 'Reset Password' }) %>
+
+<div class="form-card">
+  <h1>Set a new password</h1>
+  <p style="color:var(--muted);font-size:14px;margin-top:-8px;">
+    Enter the 6-digit code sent to <b><%= email %></b> and choose a new password.
+  </p>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form action="/auth/reset" method="POST">
+    <div class="form-group">
+      <label>6-digit code</label>
+      <input name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
+             autocomplete="one-time-code" required
+             style="font-size:22px;letter-spacing:8px;text-align:center;" />
+    </div>
+    <div class="form-group">
+      <label>New password (min 8 chars)</label>
+      <input id="pw" name="password" type="password" minlength="8" required />
+      <div class="strength">
+        <div class="strength-bar"><div id="pwBar"></div></div>
+        <div id="pwLabel" class="strength-label">Strength: —</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Confirm new password</label>
+      <input id="pw2" name="confirmPassword" type="password" minlength="8" required />
+      <div id="pwMatch" class="strength-label"></div>
+    </div>
+    <button class="btn" type="submit" style="width:100%;">Reset password</button>
+  </form>
+  <p style="text-align:center;margin-top:16px;font-size:14px;">
+    <a href="/auth/forgot">Send a new code</a>
+  </p>
+</div>
+
+<script src="/js/password.js"></script>
+<%- include('partials/footer') %>

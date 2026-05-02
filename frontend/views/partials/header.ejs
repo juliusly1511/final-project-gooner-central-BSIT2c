@@ -2,23 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title><%= typeof title !== 'undefined' ? title : 'Job Connect' %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2557a7" />
+  <title><%= typeof title !== 'undefined' ? title + ' — JobConnect' : 'JobConnect' %></title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
   <header class="header">
     <a href="/" class="logo">Job<span>Connect</span></a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="document.querySelector('.nav').classList.toggle('open');this.setAttribute('aria-expanded', this.getAttribute('aria-expanded')==='true'?'false':'true');">
+      <span></span><span></span><span></span>
+    </button>
     <nav class="nav">
       <a href="/">Find Jobs</a>
+      <a href="/people">Find People</a>
       <% if (currentUser) { %>
         <% if (currentUser.role === 'employer') { %>
           <a href="/dashboard">Dashboard</a>
           <a href="/jobs/new" class="btn btn-accent btn-sm">Post a Job</a>
         <% } %>
-        <span style="color:#767676;font-size:14px;">Hi, <%= currentUser.name %></span>
+        <a href="/profile">Profile</a>
+        <span class="nav-user">Hi, <%= currentUser.name %></span>
         <form action="/auth/logout" method="POST" class="inline">
-          <button type="submit" class="btn btn-outline btn-sm">Logout</button>
+          <button type="submit" class="btn btn-sm">Logout</button>
         </form>
       <% } else { %>
         <a href="/auth/login">Sign In</a>

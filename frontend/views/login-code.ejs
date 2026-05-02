@@ -1,0 +1,21 @@
+<%- include('partials/header', { title: 'Sign in with email code' }) %>
+
+<div class="form-card">
+  <h1>Sign in with email code</h1>
+  <p style="color:var(--muted);font-size:14px;margin-top:-8px;">
+    We'll email you a 6-digit code — no password needed.
+  </p>
+  <% if (error) { %><div class="error"><%= error %></div><% } %>
+  <form action="/auth/login-code" method="POST">
+    <div class="form-group">
+      <label>Email</label>
+      <input name="email" type="email" value="<%= form.email || '' %>" required />
+    </div>
+    <button class="btn" type="submit" style="width:100%;">Send code</button>
+  </form>
+  <p style="text-align:center;margin-top:16px;font-size:14px;">
+    <a href="/auth/login">Use password instead</a>
+  </p>
+</div>
+
+<%- include('partials/footer') %>

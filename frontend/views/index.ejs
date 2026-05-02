@@ -1,8 +1,8 @@
-<%- include('partials/header', { title: 'JobBoard — Find your next job' }) %>
+<%- include('partials/header', { title: 'JobConnect — Find your next job' }) %>
 
 <section class="hero">
   <h1>Find your next job</h1>
-  <p>Search thousands of opportunities from top companies.</p>
+  <p>Search thousands of opportunities from top companies hiring on JobConnect.</p>
   <form class="search" action="/" method="GET">
     <input type="text" name="q" placeholder="Job title, keywords, or company" value="<%= query.q %>" />
     <input type="text" name="location" placeholder="Location" value="<%= query.location %>" />
@@ -17,14 +17,22 @@
 </section>
 
 <div class="container">
-  <h2 style="margin-top:0;"><%= jobs.length %> job<%= jobs.length === 1 ? '' : 's' %> found</h2>
+  <div class="page-head">
+    <div>
+      <h1 style="margin:0;"><%= jobs.length %> job<%= jobs.length === 1 ? '' : 's' %> found</h1>
+      <p>Browse the latest openings posted on JobConnect.</p>
+    </div>
+    <a href="/people" class="btn btn-outline">Browse people →</a>
+  </div>
 
   <% if (jobs.length === 0) { %>
     <div class="empty">
-      <p>No jobs match your search. Try different keywords.</p>
+      <h1>🔍</h1>
+      <p>No jobs match your search. Try different keywords or clear filters.</p>
+      <a href="/" class="btn">View all jobs</a>
     </div>
   <% } else { %>
-    <div class="grid">
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));">
       <% jobs.forEach(job => { %>
         <article class="job-card">
           <h3><a href="/jobs/<%= job._id %>"><%= job.title %></a></h3>
@@ -32,7 +40,7 @@
           <div class="job-meta">
             <span class="tag"><%= job.category %></span>
             <span class="tag tag-muted"><%= job.type %></span>
-            <% if (job.salary) { %><span class="tag tag-muted"><%= job.salary %></span><% } %>
+            <% if (job.salary) { %><span class="tag tag-accent"><%= job.salary %></span><% } %>
           </div>
           <div class="posted">Posted <%= new Date(job.createdAt).toLocaleDateString() %></div>
         </article>
