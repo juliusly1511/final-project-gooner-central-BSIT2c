@@ -32,8 +32,22 @@ the project root with `npm start`.
 
 ```bash
 npm install
-cp .env.example .env        # then fill in MONGODB_URI, GMAIL_USER, etc.
+cp .env.example .env        # then fill in MONGODB_URI, Gmail SMTP, Google OAuth, etc.
 npm start                   # http://localhost:3000
+```
+```bash
+.env requirements
+MONGODB_URI=  
+SESSION_SECRET= 
+PORT=
+
+GMAIL_USER=
+GMAIL_APP_PASSWORD=
+MAIL_FROM_NAME=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CALLBACK_URL=
 ```
 
 ## ✨ Features
