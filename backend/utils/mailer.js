@@ -54,4 +54,65 @@ async function sendVerificationCode(toEmail, code, purpose) {
   });
 }
 
-module.exports = { sendVerificationCode };
+async function sendApplicationNotification(employerEmail, employerName, applicantData, jobData) {
+  const t = getTransporter();
+  const fromName = process.env.MAIL_FROM_NAME || 'JobConnect';
+  
+  const coverLetterPreview = applicantData.coverLetter 
+    ? applicantData.coverLetter.substring(0, 200) + (applicantData.coverLetter.length > 200 ? '...' : '')
+    : 'No cover letter provided';
+  
+  const resumeLink = applicantData.resumePath 
+    ? `<p><a href="${process.env.APP_URL || 'http://localhost:3000'}${applicantData.resumePath}" style="color:#2557a7;text-decoration:none;font-weight:bold;">📄 Download Resume</a></p>`
+    : '<p><em>No resume attached</em></p>';
+  
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:24px;border:1px solid #e4e2e0;border-radius:10px;">
+      <h2 style="color:#2557a7;margin:0 0 16px;">JobConnect — New Application</h2>
+      
+      <div style="background:#f5f5f5;padding:16px;border-radius:8px;margin:16px 0;">
+        <p style="margin:0;color:#666;font-size:12px;text-transform:uppercase;">Job Position</p>
+        <h3 style="margin:8px 0 0;color:#333;">${jobData.title}</h3>
+        <p style="margin:4px 0 0;color:#666;font-size:14px;">${jobData.company}</p>
+      </div>
+
+      <div style="margin:20px 0;">
+        <p style="color:#666;font-size:12px;text-transform:uppercase;margin:0 0 8px;">Applicant Information</p>
+        <p style="margin:4px 0;"><strong>${applicantData.name}</strong></p>
+        <p style="margin:4px 0;color:#666;"><a href="mailto:${applicantData.email}" style="color:#2557a7;text-decoration:none;">${applicantData.email}</a></p>
+        ${applicantData.phone ? `<p style="margin:4px 0;color:#666;font-size:14px;">${applicantData.phone}</p>` : ''}
+      </div>
+
+      <div style="margin:20px 0;">
+        <p style="color:#666;font-size:12px;text-transform:uppercase;margin:0 0 8px;">Cover Letter</p>
+        <div style="background:#f9f9f9;padding:12px;border-left:3px solid #2557a7;margin:8px 0;">
+          <p style="margin:0;color:#333;font-size:14px;line-height:1.5;">${coverLetterPreview}</p>
+        </div>
+      </div>
+
+      <div style="margin:20px 0;">
+        <p style="color:#666;font-size:12px;text-transform:uppercase;margin:0 0 8px;">Resume</p>
+        ${resumeLink}
+      </div>
+
+      <div style="background:#eef3fb;padding:16px;border-radius:8px;margin:20px 0;text-align:center;">
+        <a href="${process.env.APP_URL || 'http://localhost:3000'}/jobs/${jobData._id}" style="display:inline-block;background:#2557a7;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;">View Full Application</a>
+      </div>
+
+      <p style="color:#767676;font-size:12px;margin:16px 0 0;border-top:1px solid #e4e2e0;padding-top:16px;">
+        You're receiving this email because ${applicantData.name} applied for <strong>${jobData.title}</strong> at your company. 
+        <br>This is an automated notification from JobConnect.
+      </p>
+    </div>
+  `;
+
+  await t.sendMail({
+    from: `"${fromName}" <${process.env.GMAIL_USER}>`,
+    to: employerEmail,
+    subject: `New Application: ${applicantData.name} applied for ${jobData.title}`,
+    text: `New application from ${applicantData.name} for ${jobData.title}. Email: ${applicantData.email}`,
+    html,
+  });
+}
+
+module.exports = { sendVerificationCode, sendApplicationNotification };

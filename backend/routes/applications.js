@@ -5,7 +5,9 @@ const path = require('path');
 const fs = require('fs');
 const Job = require('../models/Job');
 const Application = require('../models/Application');
+const User = require('../models/User');
 const { requireRole } = require('../middleware/auth');
+const { sendApplicationNotification } = require('../utils/mailer');
 
 const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
@@ -34,18 +36,48 @@ router.post('/:jobId', requireRole('seeker'), (req, res) => {
   upload.single('resume')(req, res, async (err) => {
     try {
       if (err) throw err;
-      const job = await Job.findById(req.params.jobId);
+      const job = await Job.findById(req.params.jobId).populate('postedBy');
       if (!job) return res.status(404).render('404');
 
       const existing = await Application.findOne({ job: job._id, applicant: req.session.user.id });
       if (existing) return res.redirect(`/jobs/${job._id}?applied=1`);
 
-      await Application.create({
+      const application = await Application.create({
         job: job._id,
         applicant: req.session.user.id,
         coverLetter: (req.body.coverLetter || '').slice(0, 5000),
         resumePath: req.file ? `/uploads/${req.file.filename}` : undefined,
       });
+
+      // Get applicant details for email
+      const applicant = await User.findById(req.session.user.id);
+      const employer = job.postedBy;
+
+      // Send email notification to employer
+      if (employer && employer.email) {
+        try {
+          await sendApplicationNotification(
+            employer.email,
+            employer.name,
+            {
+              name: applicant.name,
+              email: applicant.email,
+              phone: applicant.phone,
+              coverLetter: application.coverLetter,
+              resumePath: application.resumePath,
+            },
+            {
+              _id: job._id,
+              title: job.title,
+              company: job.company,
+            }
+          );
+        } catch (emailErr) {
+          console.error('Failed to send application notification email:', emailErr);
+          // Don't fail the application submission if email fails
+        }
+      }
+
       res.redirect(`/jobs/${job._id}?applied=1`);
     } catch (e) {
       res.status(400).render('error', { message: e.message });
