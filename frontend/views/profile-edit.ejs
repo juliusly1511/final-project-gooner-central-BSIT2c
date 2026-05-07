@@ -71,6 +71,17 @@
       <textarea name="bio" rows="4"><%= user.bio || '' %></textarea>
     </div>
 
+    <h3>Security</h3>
+    <div class="form-group">
+      <label>New password <% if (user.password) { %><span style="color:var(--muted);">(optional - leave blank to keep current)</span><% } else { %><span style="color:var(--danger);">*</span><% } %></label>
+      <input type="password" name="newPassword" placeholder="<%= user.password ? 'Leave blank to keep current' : 'Set a password for your account' %>" />
+      <small style="color:var(--muted);">At least 8 characters, with uppercase, numbers, or symbols.</small>
+    </div>
+    <div class="form-group">
+      <label>Confirm new password</label>
+      <input type="password" name="confirmNewPassword" placeholder="Confirm password" />
+    </div>
+
     <% if (user.role === 'employer') { %>
       <h3>Company details</h3>
       <div class="grid-2">

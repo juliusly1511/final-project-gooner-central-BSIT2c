@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const { requireLogin } = require('../middleware/auth');
 const { uploadAvatar } = require('../utils/upload');
+const { passwordScore } = require('../utils/passwordUtils');
 
 // View own profile (edit mode)
 router.get('/', requireLogin, async (req, res) => {
@@ -36,6 +37,21 @@ router.post(
     try {
       const user = await User.findById(req.session.user.id);
       if (!user) return res.redirect('/auth/login');
+
+      // Handle password update
+      const { newPassword, confirmNewPassword } = req.body;
+      if (newPassword || confirmNewPassword) {
+        if (newPassword !== confirmNewPassword) {
+          throw new Error('Passwords do not match.');
+        }
+        if (!newPassword || newPassword.length < 8) {
+          throw new Error('Password must be at least 8 characters.');
+        }
+        if (passwordScore(newPassword) < 2) {
+          throw new Error('Password is too weak. Add uppercase, numbers, or symbols.');
+        }
+        user.password = newPassword;
+      }
 
       // Common
       user.name = (req.body.name || user.name).trim();
@@ -90,7 +106,8 @@ router.post(
       await user.save();
       // Refresh session name in case it changed
       req.session.user.name = user.name;
-      res.render('profile-edit', { user, error: null, info: 'Profile saved.' });
+      const successMsg = newPassword ? 'Profile and password saved.' : 'Profile saved.';
+      res.render('profile-edit', { user, error: null, info: successMsg });
     } catch (err) {
       const user = await User.findById(req.session.user.id);
       res.status(400).render('profile-edit', { user, error: err.message, info: null });
