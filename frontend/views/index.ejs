@@ -12,6 +12,12 @@
         <option value="<%= c %>" <%= query.category === c ? 'selected' : '' %>><%= c %></option>
       <% }) %>
     </select>
+    <select name="salaryRange">
+      <option value="">All salaries</option>
+      <% salaryRanges.forEach(range => { %>
+        <option value="<%= range.label %>" <%= query.salaryRange === range.label ? 'selected' : '' %>><%= range.label %></option>
+      <% }) %>
+    </select>
     <button class="btn btn-accent" type="submit">Search</button>
   </form>
 </section>
@@ -40,7 +46,19 @@
           <div class="job-meta">
             <span class="tag"><%= job.category %></span>
             <span class="tag tag-muted"><%= job.type %></span>
-            <% if (job.salary) { %><span class="tag tag-accent"><%= job.salary %></span><% } %>
+            <% if (job.salaryMin && job.salaryMax) { %>
+              <% 
+                let salaryLabel = '';
+                if (job.salaryMax === 999999) {
+                  salaryLabel = '$' + job.salaryMin + 'k+';
+                } else {
+                  salaryLabel = '$' + job.salaryMin + 'k–$' + job.salaryMax + 'k';
+                }
+              %>
+              <span class="tag tag-accent"><%= salaryLabel %></span>
+            <% } else if (job.salary) { %>
+              <span class="tag tag-accent"><%= job.salary %></span>
+            <% } %>
           </div>
           <div class="posted">Posted <%= new Date(job.createdAt).toLocaleDateString() %></div>
         </article>

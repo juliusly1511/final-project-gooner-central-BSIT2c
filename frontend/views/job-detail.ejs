@@ -10,7 +10,19 @@
     <div class="job-meta">
       <span class="tag"><%= job.category %></span>
       <span class="tag tag-muted"><%= job.type %></span>
-      <% if (job.salary) { %><span class="tag tag-muted"><%= job.salary %></span><% } %>
+      <% if (job.salaryMin && job.salaryMax) { %>
+        <% 
+          let salaryLabel = '';
+          if (job.salaryMax === 999999) {
+            salaryLabel = '$' + job.salaryMin + 'k+';
+          } else {
+            salaryLabel = '$' + job.salaryMin + 'k–$' + job.salaryMax + 'k';
+          }
+        %>
+        <span class="tag tag-muted"><%= salaryLabel %></span>
+      <% } else if (job.salary) { %>
+        <span class="tag tag-muted"><%= job.salary %></span>
+      <% } %>
     </div>
     <div class="description"><%= job.description %></div>
 

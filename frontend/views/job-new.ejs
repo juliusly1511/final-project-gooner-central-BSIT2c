@@ -34,7 +34,12 @@
     </div>
     <div class="form-group">
       <label>Salary (optional)</label>
-      <input name="salary" placeholder="e.g. $80k–$120k" value="<%= form.salary || '' %>" />
+      <select name="salaryRange">
+        <option value="">Select salary range</option>
+        <% salaryRanges.forEach(range => { %>
+          <option value="<%= range.label %>" <%= form.salaryRange === range.label ? 'selected' : '' %>><%= range.label %></option>
+        <% }) %>
+      </select>
     </div>
     <div class="form-group">
       <label>Description *</label>

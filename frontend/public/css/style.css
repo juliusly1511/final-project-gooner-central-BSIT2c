@@ -197,7 +197,7 @@ body { padding-top: 70px; }
   padding: 10px;
   border-radius: var(--radius-lg);
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr auto;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
   gap: 8px;
   box-shadow: var(--shadow-lg);
   position: relative;

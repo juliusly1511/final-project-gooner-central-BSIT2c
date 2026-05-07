@@ -16,6 +16,8 @@ const jobSchema = new mongoose.Schema(
       default: 'Full-time',
     },
     salary: { type: String, trim: true, maxlength: 100 },
+    salaryMin: { type: Number },
+    salaryMax: { type: Number },
     description: { type: String, required: true, maxlength: 10000 },
     postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   },
