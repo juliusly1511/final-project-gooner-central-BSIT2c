@@ -32,7 +32,7 @@ the project root with `npm start`.
 
 ```bash
 npm install
-cp .env.example .env        # then fill in MONGODB_URI, Gmail SMTP, Google OAuth, etc.
+cp .env.example .env        # then fill in the MONGODB_URI, Gmail SMTP, Google OAuth, etc.
 npm start                   # http://localhost:3000
 ```
 ```bash
