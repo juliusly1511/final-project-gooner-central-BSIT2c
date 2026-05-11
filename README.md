@@ -32,7 +32,7 @@ the project root with `npm start`.
 
 ```bash
 npm install
-cp .env.example .env        # then fill in MONGODB_URI, Gmail SMTP, Google OAuth, etc.
+cp .env.example .env        # then fill in the MONGODB_URI, Gmail SMTP, Google OAuth, etc.
 npm start                   # http://localhost:3000
 ```
 ```bash
@@ -61,6 +61,13 @@ GOOGLE_CALLBACK_URL=
 - Password strength meter + confirm-password match
 - Fully responsive, modern UI with fixed header
 
-
-  ## Live Website
+## Members
+```
+- Julius Navarro          Github & Project Manager
+- Migel Orlanes           Database Manager
+- Neil Vincent Raquid     Backend Developer
+- Glenn Aljoe Noora       Frontend Developer
+- Jhed Valera             Tester/Debugger
+```
+## Live Website
   https://final-project-gooner-central-bsit2c.onrender.com/
