@@ -61,6 +61,5 @@ GOOGLE_CALLBACK_URL=
 - Password strength meter + confirm-password match
 - Fully responsive, modern UI with fixed header
 
-
-  ## Live Website
+## Live Website
   https://final-project-gooner-central-bsit2c.onrender.com/
