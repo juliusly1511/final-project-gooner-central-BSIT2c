@@ -61,5 +61,13 @@ GOOGLE_CALLBACK_URL=
 - Password strength meter + confirm-password match
 - Fully responsive, modern UI with fixed header
 
+## Members
+
+- Julius Navarro          Github & Project Manager
+- Migel Orlanes           Database Manager
+- Neil Vincent Raquid     Backend Developer
+- Glenn Aljoe Noora       Frontend Developer
+- Jhed Valera             Tester/Debugger
+
 ## Live Website
   https://final-project-gooner-central-bsit2c.onrender.com/
