@@ -66,6 +66,7 @@ router.post('/register', async (req, res) => {
     req.session.pendingPurpose = 'signup';
     res.redirect('/auth/verify');
   } catch (err) {
+    console.error(`[AUTH] Registration error:`, err.message);
     res.status(400).render('register', {
       error: err.message, form: req.body, googleEnabled: isGoogleEnabled(),
     });

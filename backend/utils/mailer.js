@@ -1,21 +1,17 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-let transporter = null;
+let resend = null;
 
-function getTransporter() {
-  if (transporter) return transporter;
-  const user = process.env.GMAIL_USER;
-  const pass = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
-  if (!user || !pass) {
+function getResendClient() {
+  if (resend) return resend;
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
     throw new Error(
-      'Gmail SMTP is not configured. Set GMAIL_USER and GMAIL_APP_PASSWORD in your .env file.'
+      'Resend API key is not configured. Set RESEND_API_KEY in your .env file.'
     );
   }
-  transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user, pass },
-  });
-  return transporter;
+  resend = new Resend(apiKey);
+  return resend;
 }
 
 const SUBJECTS = {
@@ -31,7 +27,7 @@ const ACTIONS = {
 };
 
 async function sendVerificationCode(toEmail, code, purpose) {
-  const t = getTransporter();
+  const client = getResendClient();
   const fromName = process.env.MAIL_FROM_NAME || 'JobConnect';
   const subject = (SUBJECTS[purpose] || SUBJECTS.signup)(code);
   const action = ACTIONS[purpose] || ACTIONS.signup;
@@ -45,17 +41,19 @@ async function sendVerificationCode(toEmail, code, purpose) {
       <p style="color:#767676;font-size:13px;">If you didn't request this, you can safely ignore this email.</p>
     </div>
   `;
-  await t.sendMail({
-    from: `"${fromName}" <${process.env.GMAIL_USER}>`,
+  
+  const fromAddress = process.env.MAIL_FROM_ADDRESS || 'noreply@jobconnect.com';
+
+  await client.emails.send({
+    from: `${fromName} <${fromAddress}>`,
     to: toEmail,
     subject,
-    text: `Your JobConnect code is ${code} (expires in 15 minutes).`,
     html,
   });
 }
 
 async function sendApplicationNotification(employerEmail, employerName, applicantData, jobData) {
-  const t = getTransporter();
+  const client = getResendClient();
   const fromName = process.env.MAIL_FROM_NAME || 'JobConnect';
   
   const coverLetterPreview = applicantData.coverLetter 
@@ -106,11 +104,12 @@ async function sendApplicationNotification(employerEmail, employerName, applican
     </div>
   `;
 
-  await t.sendMail({
-    from: `"${fromName}" <${process.env.GMAIL_USER}>`,
+  const fromAddress = process.env.MAIL_FROM_ADDRESS || 'noreply@jobconnect.com';
+
+  await client.emails.send({
+    from: `${fromName} <${fromAddress}>`,
     to: employerEmail,
     subject: `New Application: ${applicantData.name} applied for ${jobData.title}`,
-    text: `New application from ${applicantData.name} for ${jobData.title}. Email: ${applicantData.email}`,
     html,
   });
 }
