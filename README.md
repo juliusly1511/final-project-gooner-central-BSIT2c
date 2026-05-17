@@ -42,7 +42,6 @@ SESSION_SECRET=
 PORT=
 
 RESEND_API_KEY=
-MAIL_FROM_NAME=JobConnectRESEND_API_KEY=
 MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
 
@@ -72,5 +71,5 @@ GOOGLE_CALLBACK_URL=
 ```
 ## Live Website
   https://final-project-gooner-central-bsit2c.onrender.com/
-##
+## Custom Domain
 https://www.jobconnect.dpdns.org/
