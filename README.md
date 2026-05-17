@@ -73,4 +73,4 @@ GOOGLE_CALLBACK_URL=
 ## Live Website
   https://final-project-gooner-central-bsit2c.onrender.com/
 ##
-  https://www.jobconnect.dpdns.org/
+https://www.jobconnect.dpdns.org/
