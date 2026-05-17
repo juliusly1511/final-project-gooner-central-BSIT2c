@@ -41,8 +41,9 @@ MONGODB_URI=
 SESSION_SECRET= 
 PORT=
 
-GMAIL_USER=
-GMAIL_APP_PASSWORD=
+RESEND_API_KEY=
+MAIL_FROM_NAME=JobConnectRESEND_API_KEY=
+MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
 
 GOOGLE_CLIENT_ID=
@@ -55,7 +56,7 @@ GOOGLE_CALLBACK_URL=
 - Job seekers + employers (different signup fields)
 - Profile creation with avatar, headline, skills, experience, education
 - Public profile pages and **profile search** at `/people`
-- Email verification + sign-in by email code (Gmail SMTP)
+- Email verification + sign-in by email code (Resend)
 - Forgot-password flow with 6-digit reset code
 - Optional **Sign in with Google** (set `GOOGLE_CLIENT_ID` + `GOOGLE_CLIENT_SECRET`)
 - Password strength meter + confirm-password match
@@ -71,3 +72,5 @@ GOOGLE_CALLBACK_URL=
 ```
 ## Live Website
   https://final-project-gooner-central-bsit2c.onrender.com/
+##
+  https://www.jobconnect.dpdns.org/
